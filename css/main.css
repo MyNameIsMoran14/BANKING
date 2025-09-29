@@ -1,0 +1,325 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    margin: 0;
+    background: url("../img/Abstract violet gradient backdrop for your eco-themed graphic design_ 1.png") center/cover no-repeat fixed;
+    color: #fff;
+}
+
+a{
+    text-decoration: none;
+}
+
+img{
+    max-width: 100%;
+}
+
+.wrapper{
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.container{
+    width: 1400px;
+    margin: 0 auto;
+}
+
+header{
+    padding: 50px 0;
+}
+
+header .logo, footer .blocks .logo{
+    text-transform: uppercase;
+    font-size: 29px;
+    font-weight: 800;
+}
+
+header nav{
+    float: right;
+    width: 50%;
+}
+
+header nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+    position: relative;
+}
+
+header nav ul li{
+    display: inline-block;
+}
+
+header nav ul li a{
+    color: #fff;
+}
+
+header nav ul li.active::after{
+    content: '';
+    display: block;
+    width: 40px;
+    height: 5px;
+    background: #CAFF33;
+    border-radius: 10px;
+    position: relative;
+    top: 10px;
+    left: -15px;
+}
+
+header nav ul li:not(.active):not(.btn) a:hover{
+    border-bottom: 5px solid #CAFF33;
+}
+
+header nav ul li.btn a, .email .block button{
+    background: #CAFF33;
+    padding: 9px 17px;
+    border-radius: 5px;
+    transition: all 500ms ease;
+    color: #000;
+}
+
+header nav ul li.btn a, .email .block button {
+    background: #CAFF33;
+    color: #000; /* текст внутри черный */
+    padding: 9px 17px;
+    border-radius: 5px;
+    transition: all 500ms ease;
+}
+
+.hero {
+    display: flex;              /* текст слева + карты справа */
+    align-items: center;        /* выравниваем по вертикали */
+    justify-content: space-between;
+    position: relative;
+    padding-bottom: 100px;
+    padding-top: 0;
+    margin-top: -180px;
+}
+
+.hero--info {
+    width: 50%;                 /* текстовая часть занимает половину */
+    padding-top: 0;
+}
+
+.hero--info h2{
+    color: #CAFF33;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.hero--info h1{
+    font-size: 70px;
+    font-weight: 600;
+}
+
+.big-title {
+    font-size: 100px;      /* размер */
+    font-weight: 700;     /* жирный */
+    line-height: 1.2;     /* расстояние между строками */
+}
+
+.big-title span {
+    display: block;       /* каждая фраза на новой строке */
+}
+
+.hero--info p{
+    font-weight: 500;
+    line-height: 170%;
+    margin: 30px 0;
+}
+
+.hero--info .btn,.hero-about .info .btn{
+    background: #CAFF33;
+    color: #000;
+    border-radius: 50px;
+    padding: 15px 30px;
+    border: 0;
+    transition: all 500ms ease;
+    font-size: 17px;
+    margin-top: 40px;
+
+}
+
+.hero--info .btn:hover,.hero-about .info .btn:hover{
+    cursor:pointer;
+    transform: scale(1.09);
+}
+
+
+.cards {
+    position: relative;
+    width: 650px;   /* увеличил ширину блока */
+    height: 420px;  /* высота под 2 карты */
+    left: 10%;
+    top: 80px;
+    z-index: 5; /* поднял слой */
+    
+    
+}
+
+.card {
+    position: absolute;
+    width: 100%;    /* карта теперь занимает всю ширину cards */
+    border-radius: 25px;
+}
+
+.card.top {
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.card.bottom {
+    top: 80px;    /* чуть больше смещения */
+    left: -30px;
+    z-index: 1;
+    opacity: 0.9;
+}
+
+.how-start {
+    background: #111;
+    color: #fff;
+    padding: 120px 0 100px;
+    text-align: center;
+
+    /* более плавный овал */
+    border-top-left-radius: 50% 300px;
+    border-top-right-radius: 50% 300px;
+
+    margin-top: -120px; 
+    position: relative;
+    z-index: 1;
+
+    /* вылазим за пределы страницы */
+    width: 110%;         /* делаем чуть шире */
+    margin-left: -5%;    /* центрируем */
+}
+
+
+.how-start h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 50px;
+}
+
+.how-start .steps {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.how-start .steps div {
+    text-align: center;
+}
+
+.how-start .steps h3 {
+    background: #CAFF33;
+    color: #000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    line-height: 50px;
+    margin: 0 auto 15px;
+    font-weight: 700;
+}
+
+
+/*Секция с играми*/
+.trending {
+    padding-top: 150px;
+}
+
+.trending h3{
+    font-weight: 600;
+    font-size: 31px;
+}
+
+.trending .see-all, .projects .see-all{
+    color: #fff;
+    background: #252110;
+    border-radius: 5px;
+    padding: 12px 23px;
+    float: right;
+    display: block;
+    transition: all 500ms ease;
+}
+
+.trending .see-all, .projects .see-all:hover{
+    transform: scale(1.1);
+}
+
+.trending .games{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 50px 0;
+}
+
+.trending .games span{
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.trending .games span img{
+    position: relative;
+    top: 5px;
+    margin-right: 7px;
+}
+
+
+/*footer*/
+
+footer{
+    background: #000;
+    padding: 50px 0;
+}
+
+footer .blocks{
+    display:flex;
+    justify-content: space-between;
+    
+}
+
+footer .blocks p{
+    width: 300px;
+    margin: 15px 0;
+}
+
+footer .blocks h4{
+    font-weight: 500;
+    font-size: 17px;
+    
+}
+
+footer .blocks ul{
+    list-style: none;
+}
+
+footer .blocks ul li{
+    margin-top: 7px;
+    opacity: 0.8;
+}
+
+footer hr{
+    margin: 30px 0;
+    border: 0;
+    height: 0.6px;
+    background: #ccc;
+
+}
+
+footer > p{
+    text-align: center;
+}
