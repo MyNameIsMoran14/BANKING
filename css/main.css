@@ -203,6 +203,9 @@ header nav ul li.btn a, .email .block button {
     /* вылазим за пределы страницы */
     width: 110%;         /* делаем чуть шире */
     margin-left: -5%;    /* центрируем */
+
+    margin-bottom: 0;
+    padding-bottom: 130px; /* увеличиваем нижний паддинг */
 }
 
 
