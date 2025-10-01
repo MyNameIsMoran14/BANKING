@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BANKING</title>
+    <!-- CSS через Flask -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="container">
+            <span class="logo">logo</span>
+            
+            <nav class="main-nav">
+                <ul>
+                    <!-- ссылки через url_for -->
+                    <li class="active"><a href="{{ url_for('index') }}">Главная</a></li>
+                    <li><a href="{{ url_for('small_business') }}">Малому бизнесу</a></li>
+                    <li><a href="{{ url_for('big_business') }}">Крупному бизнесу</a></li>
+                    <li><a href="{{ url_for('news') }}">Новости</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="{{ url_for('register') }}" class="btn primary">Стать клиентом</a>
+                <a href="#" class="btn secondary" onclick="openModal()">Войти</a>
+            </div>
+        </header>
+
+        <div class="hero container">
+            <div class="hero--info">
+                <h1 class="big-title">
+                    <span>ВОЗЬМИ КРЕДИТ</span>
+                    <span>НА ЯГЕРМЕЙСТЕР</span>
+                </h1>
+                <div class="hero-buttons">
+                    <button class="btn hero-primary">Попробовать сейчас</button>
+                    <button class="btn hero-secondary-white" onclick="openModal()">Войти</button>
+                </div>
+            </div>
+
+            <div class="cards">
+                <!-- картинки тоже через Flask -->
+                <img src="{{ url_for('static', filename='img/card-top.png') }}" alt="card top" class="card top">
+                <img src="{{ url_for('static', filename='img/card-bottom.png') }}" alt="card bottom" class="card bottom">
+            </div>
+        </div>
+
+        <section class="how-start">
+            <div class="container">
+                <h2>КАК НАЧАТЬ</h2>
+                <div class="steps">
+                    <div><h3>1</h3><p>Регистрация</p></div>
+                    <div><h3>2</h3><p>Открой карту</p></div>
+                    <div><h3>3</h3><p>Успех</p></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="blocks container">
+            <div>
+                <span class="logo">logo</span>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            </div>
+            <div>
+                <h4>about us</h4>
+                <ul>
+                    <li>Zeux</li>
+                    <li>Portfolio</li>
+                    <li>Careers</li>
+                    <li>Contact us</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact us</h4>
+                <p>Ayy, ayy I pull up, Escalade bulletproof 'case it get escalating</p>
+                <p>+7 961 273-48-05</p>
+            </div>
+        </div>
+        <hr>
+        <p>Copyright ® 2025 Moran All rights Reserved</p>
+    </footer>
+
+    <!-- JS тоже через Flask -->
+    <script src="{{ url_for('static', filename='js/check_email.js') }}"></script>
+</body>
+</html>

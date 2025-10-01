@@ -10,7 +10,7 @@ body{
     font-weight: 400;
     font-size: 16px;
     margin: 0;
-    background: url("../img/Abstract violet gradient backdrop for your eco-themed graphic design_ 1.png") center/cover no-repeat fixed;
+    background: url("/static/img/Abstract\ violet\ gradient\ backdrop\ for\ your\ eco-themed\ graphic\ design_\ 1.png") center/cover no-repeat fixed;
     color: #fff;
 }
 
@@ -26,6 +26,7 @@ img{
     width: 100%;
     overflow-x: hidden;
     overflow-y: hidden;
+    padding-top: 10px;
 }
 
 .container{
@@ -33,67 +34,88 @@ img{
     margin: 0 auto;
 }
 
-header{
-    padding: 50px 0;
+header {
+    background: #1a1a1a;
+    border-radius: 40px;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* логотип слева, навигация по центру, кнопки справа */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    max-width: 1400px;
+    margin: 60px auto;
+    position: relative;
 }
 
-header .logo, footer .blocks .logo{
-    text-transform: uppercase;
-    font-size: 29px;
-    font-weight: 800;
+/* чтобы меню было по центру */
+.main-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-header nav{
-    float: right;
-    width: 50%;
-}
-
-header nav ul{
+.main-nav ul {
     list-style: none;
     display: flex;
-    justify-content: space-between;
-    z-index: 2;
-    position: relative;
+    gap: 40px;
 }
 
-header nav ul li{
-    display: inline-block;
-}
-
-header nav ul li a{
+.main-nav ul li a {
     color: #fff;
+    font-weight: 500;
+    transition: 0.3s;
 }
 
-header nav ul li.active::after{
-    content: '';
-    display: block;
-    width: 40px;
-    height: 5px;
+/* убираем зелёный фон и подсветку */
+.main-nav ul li.active a {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* при наведении только цвет текста */
+.main-nav ul li a:hover {
+    color: #CAFF33;
+}
+
+/* кнопки справа */
+.header-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.header-actions .btn {
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.header-actions .btn.primary {
+    background: transparent; /* прозрачный фон */
+    color: #fff;             /* белый текст */
+    border: none;            /* убираем рамку */
+    box-shadow: none;        /* убираем тень */
+    padding: 10px 25px;      /* оставляем удобные отступы */
+    border-radius: 0;        /* убираем скругление */
+}
+
+.header-actions .btn.primary:hover {
+    color: #CAFF33;          /* например, можно изменить цвет при наведении */
+    background: transparent;  /* фон остаётся прозрачным */
+}
+
+/* "Войти" — контурная зелёная */
+.header-actions .btn.secondary {
+    background: transparent;
+    border: 2px solid #CAFF33;
+    color: #CAFF33;
+}
+
+.header-actions .btn.secondary:hover {
     background: #CAFF33;
-    border-radius: 10px;
-    position: relative;
-    top: 10px;
-    left: -15px;
-}
-
-header nav ul li:not(.active):not(.btn) a:hover{
-    border-bottom: 5px solid #CAFF33;
-}
-
-header nav ul li.btn a, .email .block button{
-    background: #CAFF33;
-    padding: 9px 17px;
-    border-radius: 5px;
-    transition: all 500ms ease;
     color: #000;
-}
-
-header nav ul li.btn a, .email .block button {
-    background: #CAFF33;
-    color: #000; /* текст внутри черный */
-    padding: 9px 17px;
-    border-radius: 5px;
-    transition: all 500ms ease;
 }
 
 .hero {
@@ -101,9 +123,9 @@ header nav ul li.btn a, .email .block button {
     align-items: center;        /* выравниваем по вертикали */
     justify-content: space-between;
     position: relative;
-    padding-bottom: 100px;
+    padding-bottom: 60px;
     padding-top: 0;
-    margin-top: -180px;
+    margin-top: 30px;
 }
 
 .hero--info {
@@ -139,7 +161,7 @@ header nav ul li.btn a, .email .block button {
 }
 
 .hero--info .btn,.hero-about .info .btn{
-    background: #CAFF33;
+    background: #caff33;
     color: #000;
     border-radius: 50px;
     padding: 15px 30px;
@@ -150,9 +172,53 @@ header nav ul li.btn a, .email .block button {
 
 }
 
-.hero--info .btn:hover,.hero-about .info .btn:hover{
-    cursor:pointer;
-    transform: scale(1.09);
+
+.hero-buttons {
+    display: flex;
+    gap: 20px; /* расстояние между кнопками */
+    
+}
+
+
+.hero-buttons {
+    display: flex;
+    gap: 20px; /* расстояние между кнопками */
+    
+}
+
+.hero--info .btn.hero-primary {
+    background: #caff33;
+    color: #000;
+    border-radius: 50px;
+    padding: 15px 30px;
+    border: 2px solid transparent;
+    transition: all 500ms ease;
+    font-size: 17px;
+}
+
+.hero--info .btn.hero-primary:hover {
+    border-color: #caff33;        /* меняем только цвет */
+    background: none;
+    color: #caff33;
+    cursor: pointer;
+}
+
+.hero--info .btn.hero-secondary-white {
+    background: transparent;
+    color: #fff;
+    border: solid #fff;
+    border-radius: 50px;
+    padding: 15px 30px;
+    font-size: 17px;
+    transition: all 300ms ease;
+}
+
+.hero--info .btn.hero-secondary-white:hover {
+    border: 2px solid #caff33;
+    
+    color: #caff33;
+    cursor: pointer;
+    
 }
 
 
@@ -227,7 +293,7 @@ header nav ul li.btn a, .email .block button {
 }
 
 .how-start .steps h3 {
-    background: #CAFF33;
+    background: #BEB1F5;
     color: #000;
     width: 50px;
     height: 50px;

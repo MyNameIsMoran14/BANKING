@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | PIN</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  	<link rel="stylesheet" href="{{ url_for('static', filename='css/test.css') }}">
+	<script src="{{ url_for('static', filename='js/modal.js') }}" defer></script>
+</head>
+<body>
+    <div class="registration-wrapper">
+        <div class="registration-card">
+            <h1 class="registration-title">Стань частью PIN</h1>
+            <h2>Регистрация</h2>
+            <form method="POST" action="{{ url_for('register') }}">
+                <input type="text" name="username" placeholder="Имя пользователя" required>
+                <input type="email" name="email" placeholder="Email" required>
+
+                <div class="password-container">
+                    <input type="password" id="reg-password" name="password" placeholder="Пароль" required>
+                    <span class="password-toggle" onclick="togglePassword()">👁</span>
+                </div>
+
+                <div class="role-selection">
+                    <label>
+                        <input type="radio" name="role" value="user" checked>
+                        <span>Ученик</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="role" value="teacher">
+                        <span>Преподаватель</span>
+                    </label>
+                </div>
+
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+
+            <a href="{{ url_for('index') }}" class="registration-back">← Назад на главную</a>
+        </div>
+    </div>
+
+
+
+
+</body>
