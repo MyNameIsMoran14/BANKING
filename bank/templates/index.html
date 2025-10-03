@@ -6,6 +6,8 @@
     <title>BANKING</title>
     <!-- CSS через Flask -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static',filename='js/app.js')}}" defer></script>
+    <script src="{{ url_for('static',filename='js/modal.js')}}" defer></script>
 </head>
 
 <body>
@@ -15,7 +17,6 @@
             
             <nav class="main-nav">
                 <ul>
-                    <!-- ссылки через url_for -->
                     <li class="active"><a href="{{ url_for('index') }}">Главная</a></li>
                     <li><a href="{{ url_for('small_business') }}">Малому бизнесу</a></li>
                     <li><a href="{{ url_for('big_business') }}">Крупному бизнесу</a></li>
@@ -42,7 +43,6 @@
             </div>
 
             <div class="cards">
-                <!-- картинки тоже через Flask -->
                 <img src="{{ url_for('static', filename='img/card-top.png') }}" alt="card top" class="card top">
                 <img src="{{ url_for('static', filename='img/card-bottom.png') }}" alt="card bottom" class="card bottom">
             </div>
@@ -59,6 +59,32 @@
             </div>
         </section>
     </div>
+
+    <!-- Модальное окно логина -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Вход</h2>
+            <form action="{{ url_for('login') }}" method="POST">
+                <label>Логин:</label>
+                <input type="text" name="username" required>
+                <label>Пароль:</label>
+                <input type="password" name="password" required>
+                <button type="submit" class="btn primary">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Flash-сообщения -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-container">
+            {% for msg in messages %}
+                <div class="flash">{{ msg }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
 
     <footer>
         <div class="blocks container">
@@ -85,7 +111,7 @@
         <p>Copyright ® 2025 Moran All rights Reserved</p>
     </footer>
 
-    <!-- JS тоже через Flask -->
-    <script src="{{ url_for('static', filename='js/check_email.js') }}"></script>
+
+
 </body>
 </html>
