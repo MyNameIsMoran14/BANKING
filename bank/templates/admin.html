@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ-панель</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static',filename='js/modal.js')}}" defer></script>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>🔧 Панель администратора</h1>
+            <p>Управление пользователями и системой</p>
+        </div>
+
+        <!-- Карточки статистики -->
+        <div class="admin-stats">
+            <div class="stat-card">
+                <div class="stat-number">{{ users|length }}</div>
+                <div class="stat-label">Всего пользователей</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ users|selectattr("role", "equalto", "manager")|list|length }}</div>
+                <div class="stat-label">Менеджеров</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ users|selectattr("is_active")|list|length }}</div>
+                <div class="stat-label">Активных</div>
+            </div>
+        </div>
+
+        <!-- Создание ролей -->
+        <div class="admin-section">
+            <h2>Все пользователи</h2>
+            <table class="admin-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Логин</th>
+                    <th>Роль</th>
+                    <th>Статус</th>
+                    <th>Создан</th>
+                    <th>Действия</th>
+                </tr>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>
+                        <div class="role-dropdown {% if user.username != 'admin' %}has-arrow{% endif %}">
+                            {% if user.role == 'admin' %}
+                                {% if user.username == 'admin' %}
+                                <!-- Основной админ - без меню и стрелочки -->
+                                <button class="role-btn admin" disabled>👑 Админ</button>
+                                <small style="display: block; color: #CAFF33; font-size: 10px;">Основной</small>
+                                {% else %}
+                                <!-- Остальные админы - с меню -->
+                                <button class="role-btn admin" onclick="toggleRoleMenu(this)">👑 Админ</button>
+                                {% endif %}
+                            {% elif user.role == 'manager' %}
+                            <button class="role-btn manager" onclick="toggleRoleMenu(this)">👔 Менеджер</button>
+                            {% else %}
+                            <button class="role-btn client" onclick="toggleRoleMenu(this)">👤 Клиент</button>
+                            {% endif %}
+                            
+                            {% if user.username != 'admin' %}
+                            <div class="role-dropdown-content" id="role-menu-{{ user.id }}">
+                                <form action="{{ url_for('change_role') }}" method="POST">
+                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                    <button type="submit" name="new_role" value="client" class="role-option {% if user.role == 'client' %}active{% endif %}">
+                                        👤 Клиент
+                                    </button>
+                                    <button type="submit" name="new_role" value="manager" class="role-option {% if user.role == 'manager' %}active{% endif %}">
+                                        👔 Менеджер
+                                    </button>
+                                    <button type="submit" name="new_role" value="admin" class="role-option admin-option {% if user.role == 'admin' %}active{% endif %}">
+                                        👑 Админ
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>
+                        {% if user.is_active %}
+                        <span class="status-active">✅ Активен</span>
+                        {% else %}
+                        <span class="status-inactive">❌ Заблокирован</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.created_by or 'Система' }}</td>
+                    <td>
+                        {% if user.role != 'admin' or user.username != 'admin' %}
+                        <form action="{{ url_for('toggle_user') }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <button type="submit" class="admin-btn secondary" {% if user.username == 'admin' %}disabled{% endif %}>
+                                {% if user.is_active %}Заблокировать{% else %}Активировать{% endif %}
+                            </button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="admin-back">← На главную</a>
+    </div>
+</body>
+</html>

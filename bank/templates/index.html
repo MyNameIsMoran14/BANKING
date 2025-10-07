@@ -6,14 +6,14 @@
     <title>BANKING</title>
     <!-- CSS через Flask -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <script src="{{ url_for('static',filename='js/app.js')}}" defer></script>
+    <script src="{{ url_for('static',filename='js/app.js')}}?v=1.1" defer></script>
     <script src="{{ url_for('static',filename='js/modal.js')}}" defer></script>
 </head>
 
 <body>
     <div class="wrapper">
         <header class="container">
-            <span class="logo">logo</span>
+            <span class="logo">LOGO</span>
             
             <nav class="main-nav">
                 <ul>
@@ -26,7 +26,25 @@
 
             <div class="header-actions">
                 <a href="{{ url_for('register') }}" class="btn primary">Стать клиентом</a>
+                
+                {% if user %}
+                <div class="user-menu">
+                    <button class="btn secondary user-btn">
+                        {{ user }} ({{ role }})
+                        <span class="arrow">▶</span>
+                    </button>
+                    <div class="dropdown-content">
+                        {% if role == 'admin' %}
+                        <a href="{{ url_for('admin_panel') }}">Админ-панель</a>
+                        {% elif role == 'manager' %}
+                        <a href="{{ url_for('manager_panel') }}">Панель менеджера</a>
+                        {% endif %}
+                        <a href="{{ url_for('logout') }}">Выйти</a>
+                    </div>
+                </div>
+                {% else %}
                 <a href="#" class="btn secondary" onclick="openModal()">Войти</a>
+                {% endif %}
             </div>
         </header>
 
@@ -38,7 +56,14 @@
                 </h1>
                 <div class="hero-buttons">
                     <button class="btn hero-primary">Попробовать сейчас</button>
+                    
+                    {% if user %}
+                    <!-- Просто кнопка "Выйти" без меню -->
+                    <a href="{{ url_for('logout') }}" class="btn hero-secondary-white">Выйти</a>
+                    {% else %}
+                    <!-- Обычная кнопка входа -->
                     <button class="btn hero-secondary-white" onclick="openModal()">Войти</button>
+                    {% endif %}
                 </div>
             </div>
 
@@ -52,9 +77,18 @@
             <div class="container">
                 <h2>КАК НАЧАТЬ</h2>
                 <div class="steps">
-                    <div><h3>1</h3><p>Регистрация</p></div>
-                    <div><h3>2</h3><p>Открой карту</p></div>
-                    <div><h3>3</h3><p>Успех</p></div>
+                    <div>
+                        <h3>1</h3>
+                        <p>Регистрация</p>
+                    </div>
+                    <div>
+                        <h3>2</h3>
+                        <p>Открой карту</p>
+                    </div>
+                    <div>
+                        <h3>3</h3>
+                        <p>Успех</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -65,13 +99,13 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Вход</h2>
+            <p>Войдите в свой аккаунт</p>
             <form action="{{ url_for('login') }}" method="POST">
-                <label>Логин:</label>
-                <input type="text" name="username" required>
-                <label>Пароль:</label>
-                <input type="password" name="password" required>
+                <input type="text" name="username" placeholder="Логин" required>
+                <input type="password" name="password" placeholder="Пароль" required>
                 <button type="submit" class="btn primary">Войти</button>
             </form>
+            <a href="{{ url_for('register') }}" class="modal-register-link">Нет аккаунта? Зарегистрируйтесь</a>
         </div>
     </div>
 

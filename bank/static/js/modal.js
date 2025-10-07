@@ -1,79 +1,105 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("login-modal");
-  const loginButton = document.querySelector(".cabinet");
-  const modalContent = modal.querySelector(".modal-content");
+function openModal() {
+    document.getElementById('loginModal').style.display = 'block';
+}
 
+function closeModal() {
+    document.getElementById('loginModal').style.display = 'none';
+}
 
-  loginButton?.addEventListener("click", function (e) {
-    e.preventDefault();
-    openModal();
-  });
-
-
-  window.addEventListener("click", function (e) {
-    if (e.target === modal) {
-      closeModal();
+// Закрытие при клике вне окна
+window.onclick = function(event) {
+    const modal = document.getElementById('loginModal');
+    if (event.target == modal) {
+        modal.style.display = "none";
     }
-  });
-
-
-  window.togglePassword = function () {
-    const passwordInput = document.getElementById("password");
-    const toggleIcon = document.querySelector(".toggle-password");
-    const isHidden = passwordInput.type === "password";
-
-    passwordInput.type = isHidden ? "text" : "password";
-    toggleIcon.textContent = isHidden ? "👁" : "👁";
-  };
-
- 
-  window.openModal = function () {
-    modal.classList.remove("fade-out");
-    modal.style.display = "flex";
-  };
-
-
-  window.closeModal = function () {
-    modal.classList.add("fade-out");
-    modalContent.classList.add("fade-out");
-
-    setTimeout(() => {
-      modal.style.display = "none";
-      modal.classList.remove("fade-out");
-      modalContent.classList.remove("fade-out");
-    }, 300);
-  };
-
-
-  window.handleRegister = function () {
-    window.location.href = "/register"; 
-  };
-});
-
-function openArticleModal() {
-  document.getElementById('article-modal').style.display = 'flex';
 }
 
-function closeArticleModal() {
-  document.getElementById('article-modal').style.display = 'none';
-}
-
-window.addEventListener('click', function (e) {
-  const modal = document.getElementById('article-modal');
-  if (e.target === modal) {
-    closeArticleModal();
-  }
+document.addEventListener("DOMContentLoaded", () => {
+    const userMenu = document.querySelector('.user-menu');
+    const dropdown = document.querySelector('.dropdown-content');
+    
+    if (userMenu && dropdown) {
+        let menuTimeout;
+        
+        userMenu.addEventListener('mouseenter', () => {
+            clearTimeout(menuTimeout);
+            dropdown.style.display = 'block';
+        });
+        
+        userMenu.addEventListener('mouseleave', () => {
+            // Задержка перед закрытием
+            menuTimeout = setTimeout(() => {
+                dropdown.style.display = 'none';
+            }, 300); // 300ms задержка
+        });
+        
+        dropdown.addEventListener('mouseenter', () => {
+            clearTimeout(menuTimeout);
+        });
+        
+        dropdown.addEventListener('mouseleave', () => {
+            dropdown.style.display = 'none';
+        });
+    }
 });
 
+// Автоматическое скрытие flash-сообщений через 2 секунды
 document.addEventListener("DOMContentLoaded", () => {
     const flashes = document.querySelectorAll(".flash");
+    
     if (flashes.length > 0) {
-        setTimeout(() => {
-            flashes.forEach(flash => {
-                flash.style.transition = "opacity 0.5s ease";
-                flash.style.opacity = "0";
-                setTimeout(() => flash.remove(), 500); // удалим после анимации
-            });
-        }, 2000); // 2 секунды
+        flashes.forEach(flash => {
+            // Через 2 секунды добавляем класс для анимации исчезновения
+            setTimeout(() => {
+                flash.classList.add("hide");
+                
+                // Через 0.5 секунды удаляем элемент из DOM
+                setTimeout(() => {
+                    if (flash.parentElement) {
+                        flash.remove();
+                    }
+                }, 500);
+                
+            }, 2000); // 2 секунды
+        });
+    }
+});
+
+let activeRoleMenu = null;
+
+function toggleRoleMenu(button) {
+    const dropdown = button.parentElement.querySelector('.role-dropdown-content');
+    const menuId = dropdown.id;
+    
+    // Закрываем предыдущее открытое меню
+    if (activeRoleMenu && activeRoleMenu !== dropdown) {
+        activeRoleMenu.style.display = 'none';
+    }
+    
+    // Переключаем текущее меню
+    if (dropdown.style.display === 'block') {
+        dropdown.style.display = 'none';
+        activeRoleMenu = null;
+    } else {
+        dropdown.style.display = 'block';
+        activeRoleMenu = dropdown;
+    }
+}
+
+// Закрываем меню при клике вне его
+document.addEventListener('click', function(event) {
+    if (activeRoleMenu && !event.target.closest('.role-dropdown')) {
+        activeRoleMenu.style.display = 'none';
+        activeRoleMenu = null;
+    }
+});
+
+// Закрываем меню при выборе опции
+document.addEventListener('submit', function(event) {
+    if (event.target.closest('.role-dropdown-content form')) {
+        if (activeRoleMenu) {
+            activeRoleMenu.style.display = 'none';
+            activeRoleMenu = null;
+        }
     }
 });

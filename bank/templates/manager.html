@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель менеджера</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Панель менеджера</h1>
+        <p>Добро пожаловать, {{ session.user }}!</p>
+        
+        <div class="manager-section">
+            <h2>Функции менеджера</h2>
+            <ul>
+                <li>Просмотр клиентов</li>
+                <li>Одобрение заявок</li>
+                <li>Работа с кредитами</li>
+                <li>Отчетность</li>
+            </ul>
+        </div>
+        
+        <a href="{{ url_for('index') }}" class="btn primary">← На главную</a>
+    </div>
+</body>
+</html>
