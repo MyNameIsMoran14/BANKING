@@ -133,21 +133,22 @@ def create_manager():
     
     username = request.form['username']
     password = request.form['password']
+    role = request.form.get('role', 'manager')  # По умолчанию менеджер
     
     if User.query.filter_by(username=username).first():
         flash("Пользователь с таким логином уже существует!", "error")
         return redirect(url_for('admin_panel'))
     
-    manager = User(
+    new_user = User(
         username=username,
         password=password,
-        role='manager',
+        role=role,
         created_by=session['user']
     )
-    db.session.add(manager)
+    db.session.add(new_user)
     db.session.commit()
     
-    flash(f"Менеджер {username} создан!", "success")
+    flash(f"Пользователь {username} создан с ролью {role}!", "success")
     return redirect(url_for('admin_panel'))
 
 # --- Блокировка/разблокировка пользователей ---

@@ -29,7 +29,22 @@
             </div>
         </div>
 
-        <!-- Создание ролей -->
+        <!-- СОЗДАНИЕ НОВОГО ПОЛЬЗОВАТЕЛЯ -->
+        <div class="admin-section">
+            <h2>Создать нового пользователя</h2>
+            <form action="{{ url_for('create_manager') }}" method="POST" class="admin-form">
+                <input type="text" name="username" placeholder="Логин пользователя" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <select name="role" style="background: #1a1a1a; color: #fff; border: 2px solid #444; padding: 12px 15px; border-radius: 8px;">
+                    <option value="client">👤 Клиент</option>
+                    <option value="manager">👔 Менеджер</option>
+                    <option value="admin">👑 Админ</option>
+                </select>
+                <button type="submit" class="admin-btn">Создать пользователя</button>
+            </form>
+        </div>
+
+        <!-- Список пользователей -->
         <div class="admin-section">
             <h2>Все пользователи</h2>
             <table class="admin-table">
