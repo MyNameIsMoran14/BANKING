@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 # --- Настройка приложения ---
@@ -16,10 +17,16 @@ db = SQLAlchemy(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
-    password = db.Column(db.String(150), nullable=False)
-    role = db.Column(db.String(20), default='client')  # client, manager, admin
+    password_hash = db.Column(db.String(255), nullable=False)  # Увеличил длину для хэша
+    role = db.Column(db.String(20), default='client')
     is_active = db.Column(db.Boolean, default=True)
-    created_by = db.Column(db.String(150))  # Кто создал аккаунт (для менеджеров)
+    created_by = db.Column(db.String(150))
+    
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 # --- Создаём таблицы при первом запуске ---
 with app.app_context():
@@ -29,9 +36,9 @@ with app.app_context():
     if not User.query.filter_by(role='admin').first():
         admin = User(
             username='admin',
-            password='admin123',
             role='admin'
         )
+        admin.set_password('admin123')  # ХЭШИРУЕМ пароль админа
         db.session.add(admin)
         db.session.commit()
         print("🔐 Создан начальный админ: admin / admin123")
@@ -65,7 +72,8 @@ def register():
             flash("❌ Пользователь с таким логином уже существует!")
             return redirect(url_for("register"))
 
-        new_user = User(username=username, password=password, role='client')
+        new_user = User(username=username, role='client')
+        new_user.set_password(password)  # ХЭШИРУЕМ ПАРОЛЬ
         db.session.add(new_user)
         db.session.commit()
 
@@ -78,9 +86,9 @@ def register():
 def login():
     username = request.form['username']
     password = request.form['password']
-    user = User.query.filter_by(username=username, password=password).first()
+    user = User.query.filter_by(username=username).first()  # Ищем только по username
     
-    if user and user.is_active:
+    if user and user.is_active and user.check_password(password):  # ПРОВЕРЯЕМ ХЭШ
         session['user'] = user.username
         session['role'] = user.role
         flash(f"Привет, {user.username}! (Роль: {user.role})", "success")
@@ -124,7 +132,7 @@ def manager_panel():
     
     return render_template('manager.html')
 
-# --- Создание менеджера (только админ) ---
+# --- Создание пользователя (только админ) ---
 @app.route('/admin/create_manager', methods=['POST'])
 def create_manager():
     if session.get('role') != 'admin':
@@ -141,10 +149,10 @@ def create_manager():
     
     new_user = User(
         username=username,
-        password=password,
         role=role,
         created_by=session['user']
     )
+    new_user.set_password(password)  # ХЭШИРУЕМ пароль нового пользователя
     db.session.add(new_user)
     db.session.commit()
     
@@ -165,6 +173,29 @@ def toggle_user():
         user.is_active = not user.is_active
         db.session.commit()
         flash(f"Пользователь {user.username} {'заблокирован' if not user.is_active else 'активирован'}!", "success")
+    
+    return redirect(url_for('admin_panel'))
+
+@app.route('/admin/delete_user', methods=['POST'])
+def delete_user():
+    if session.get('role') != 'admin':
+        flash("Доступ запрещен!", "error")
+        return redirect(url_for('index'))
+    
+    user_id = request.form['user_id']
+    user = User.query.get(user_id)
+    
+    if user:
+        # Запрещаем удалять основного админа и самого себя
+        if user.username == 'admin':
+            flash("Нельзя удалить основного администратора!", "error")
+        elif user.username == session.get('user'):
+            flash("Нельзя удалить самого себя!", "error")
+        else:
+            username = user.username
+            db.session.delete(user)
+            db.session.commit()
+            flash(f"Пользователь {username} удален из системы!", "success")
     
     return redirect(url_for('admin_panel'))
 
