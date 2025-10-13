@@ -3,27 +3,26 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
-# --- Настройка приложения ---
 app = Flask(__name__)
-app.secret_key = "supersecret"  # лучше заменить на свой ключ
+app.secret_key = "supersecret"  # ключ(не воровать пжпжпж)
 
-# --- Настройка базы данных SQLite ---
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# --- Модель пользователя с ролями ---
+# модель с ролями
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
-    password_hash = db.Column(db.String(255), nullable=False)  # Увеличил длину для хэша
+    password_hash = db.Column(db.String(255), nullable=False)  
     role = db.Column(db.String(20), default='client')
     is_active = db.Column(db.Boolean, default=True)
     created_by = db.Column(db.String(150))
     
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=16)
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -43,7 +42,7 @@ with app.app_context():
         db.session.commit()
         print("🔐 Создан начальный админ: admin / admin123")
 
-# --- Маршруты ---
+# Маршруты 
 @app.route('/')
 def index():
     user = session.get('user', None)
@@ -69,7 +68,7 @@ def register():
         password = request.form["password"]
 
         if User.query.filter_by(username=username).first():
-            flash("❌ Пользователь с таким логином уже существует!")
+            flash("Пользователь с таким логином уже существует!")
             return redirect(url_for("register"))
 
         new_user = User(username=username, role='client')
@@ -77,7 +76,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
 
-        flash("✅ Регистрация успешна!", "success")
+        flash("Регистрация успешна!", "success")
         return redirect(url_for("index"))
 
     return render_template("register.html")
@@ -92,7 +91,7 @@ def login():
         session['user'] = user.username
         session['role'] = user.role
         flash(f"Привет, {user.username}! (Роль: {user.role})", "success")
-        print(f"🔐 Вход: {username} с ролью {user.role}")
+        print(f" Вход: {username} с ролью {user.role}")
         
         # Редирект в зависимости от роли
         if user.role == 'admin':
@@ -105,7 +104,7 @@ def login():
         flash("Неверный логин или пароль!", "error")
         return redirect(url_for('index'))
 
-# --- Выход ---
+
 @app.route('/logout')
 def logout():
     username = session.get('user')
@@ -113,7 +112,7 @@ def logout():
     flash(f"Вы вышли из аккаунта!", "info")
     return redirect(url_for('index'))
 
-# --- Админ панель ---
+# Админ панель
 @app.route('/admin')
 def admin_panel():
     if session.get('role') != 'admin':
@@ -123,7 +122,7 @@ def admin_panel():
     users = User.query.all()
     return render_template('admin.html', users=users)
 
-# --- Панель менеджера ---
+# Панель менеджера
 @app.route('/manager')
 def manager_panel():
     if session.get('role') != 'manager':
@@ -132,7 +131,7 @@ def manager_panel():
     
     return render_template('manager.html')
 
-# --- Создание пользователя (только админ) ---
+# Создание пользователя ( админ)
 @app.route('/admin/create_manager', methods=['POST'])
 def create_manager():
     if session.get('role') != 'admin':
@@ -159,7 +158,7 @@ def create_manager():
     flash(f"Пользователь {username} создан с ролью {role}!", "success")
     return redirect(url_for('admin_panel'))
 
-# --- Блокировка/разблокировка пользователей ---
+# ТЫ РЫЦАРЯ ***** ПОСЛАЛ?
 @app.route('/admin/toggle_user', methods=['POST'])
 def toggle_user():
     if session.get('role') != 'admin':
@@ -169,7 +168,7 @@ def toggle_user():
     user_id = request.form['user_id']
     user = User.query.get(user_id)
     
-    if user and user.role != 'admin':  # Нельзя блокировать админов
+    if user and user.role != 'admin':  # АДМИНИСТРАЦИЮ НЕ БАНИМ ЙОУ
         user.is_active = not user.is_active
         db.session.commit()
         flash(f"Пользователь {user.username} {'заблокирован' if not user.is_active else 'активирован'}!", "success")
@@ -213,7 +212,7 @@ def change_role():
         # Запрещаем менять роль основному админу admin
         if user.username == 'admin':
             flash("Нельзя изменить роль основного администратора!", "error")
-        # Проверяем, не пытаемся ли изменить роль текущего админа
+        # проверка попытки изменить админа
         elif user.username == session.get('user'):
             flash("Нельзя изменить свою собственную роль!", "error")
         else:
@@ -223,6 +222,6 @@ def change_role():
     
     return redirect(url_for('admin_panel'))
 
-# --- Запуск ---
+
 if __name__ == "__main__":
     app.run(debug=True)

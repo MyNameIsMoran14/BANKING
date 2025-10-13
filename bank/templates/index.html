@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BANKING</title>
-    <!-- CSS через Flask -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script src="{{ url_for('static',filename='js/app.js')}}?v=1.1" defer></script>
     <script src="{{ url_for('static',filename='js/modal.js')}}" defer></script>
@@ -18,8 +17,20 @@
             <nav class="main-nav">
                 <ul>
                     <li class="active"><a href="{{ url_for('index') }}">Главная</a></li>
-                    <li><a href="{{ url_for('small_business') }}">Малому бизнесу</a></li>
-                    <li><a href="{{ url_for('big_business') }}">Крупному бизнесу</a></li>
+                    <li class="hover-modal">
+                        <a href="{{ url_for('small_business') }}">Малому бизнесу</a>
+                        <div class="hover-popup">
+                            <h4>Малому бизнесу</h4>
+                            <p>Простые решения для вашего роста: быстрые переводы, CRM и аналитика в одном месте.</p>
+                        </div>
+                    </li>
+                    <li class="hover-modal">
+                        <a href="{{ url_for('big_business') }}">Крупному бизнесу</a>
+                        <div class="hover-popup">
+                            <h4>Крупному бизнесу</h4>
+                            <p>Интеграция API, кастомные решения и персональный менеджер для вашего бизнеса.</p>
+                        </div>
+                    </li>
                     <li><a href="{{ url_for('news') }}">Новости</a></li>
                 </ul>
             </nav>
@@ -55,13 +66,10 @@
                     <span>НА ЯГЕРМЕЙСТЕР</span>
                 </h1>
                 <div class="hero-buttons">
-                    <button class="btn hero-primary">Попробовать сейчас</button>
-                    
+                    <button class="btn hero-primary">Попробовать сейчас</button> 
                     {% if user %}
-                    <!-- Просто кнопка "Выйти" без меню -->
                     <a href="{{ url_for('logout') }}" class="btn hero-secondary-white">Выйти</a>
                     {% else %}
-                    <!-- Обычная кнопка входа -->
                     <button class="btn hero-secondary-white" onclick="openModal()">Войти</button>
                     {% endif %}
                 </div>
@@ -120,6 +128,32 @@
         {% endif %}
     {% endwith %}
 
+    <section class="trust-section">
+        <div class="trust-container"> 
+            <div class="trust-left">
+                <img src="{{ url_for('static', filename='img/Rectangle 78.png') }}" alt="Dots" class="dots-image">
+                <img src="{{ url_for('static', filename='img/Line 1.png') }}" alt="Line" class="line-image">
+                <div class="phone-wrapper">
+                    <img src="{{ url_for('static', filename='img/Apple iPhone 11 Pro Max Midnight Green 2.png') }}" alt="Phone" class="phone-image">     
+                </div>
+            </div>
+
+            
+            <div class="trust-right">
+                <div class="speech-bubble">
+                    <img src="{{ url_for('static', filename='img/Ellipse 25.png') }}" alt="Bubble" class="bubble-bg">
+                    <div class="bubble-text">
+                        <p class="trust-text">Доверяйте нам, и мы всё уладим...</p>
+                        <p class="trust-subtext">как-нибудь!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+
     <footer>
         <div class="blocks container">
             <div>
@@ -144,7 +178,6 @@
         <hr>
         <p>Copyright ® 2025 Moran All rights Reserved</p>
     </footer>
-
 
 
 </body>

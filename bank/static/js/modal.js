@@ -103,3 +103,28 @@ document.addEventListener('submit', function(event) {
         }
     }
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const hoverItems = document.querySelectorAll('.hover-modal');
+
+    hoverItems.forEach(item => {
+        const popup = item.querySelector('.hover-popup');
+        let popupTimeout;
+
+        const showPopup = () => {
+            clearTimeout(popupTimeout);
+            item.classList.add('active');
+        };
+
+        const hidePopup = () => {
+            popupTimeout = setTimeout(() => {
+                item.classList.remove('active');
+            }, 300);
+        };
+
+        item.addEventListener('mouseenter', showPopup);
+        item.addEventListener('mouseleave', hidePopup);
+
+        popup.addEventListener('mouseenter', showPopup);
+        popup.addEventListener('mouseleave', hidePopup);
+    });
+});
