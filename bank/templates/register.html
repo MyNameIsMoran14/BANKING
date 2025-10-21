@@ -31,6 +31,15 @@
                 </div>
 
                 <button type="submit">Зарегистрироваться</button>
+
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="agreement" name="agreement" required>
+                    <label for="agreement">
+                        Я принимаю условия 
+                        <a href="{{ url_for('user_agreement') }}" target="_blank">пользовательского соглашения</a>
+                        и <a href="{{ url_for('privacy_policy') }}" target="_blank">политики конфиденциальности</a>.
+                    </label>
+                </div>
             </form>
 
             <a href="{{ url_for('index') }}" class="registration-back">← Назад на главную</a>

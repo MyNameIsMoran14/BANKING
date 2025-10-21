@@ -31,7 +31,7 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
     
-    # Создаем начального админа если его нет
+    
     if not User.query.filter_by(role='admin').first():
         admin = User(
             username='admin',
@@ -221,6 +221,14 @@ def change_role():
             flash(f"Роль пользователя {user.username} изменена на {new_role}!", "success")
     
     return redirect(url_for('admin_panel'))
+
+@app.route('/user_agreement')
+def user_agreement():
+    return render_template('user_agreement.html')
+
+@app.route('/privacy_policy')
+def privacy_policy():
+    return render_template('privacy_policy.html')
 
 
 if __name__ == "__main__":

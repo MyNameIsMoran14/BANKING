@@ -479,6 +479,69 @@ header {
     color: #CAFF33;
 }
 
+.checkbox-wrapper input[type="checkbox"] {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #444;
+    border-radius: 50%; /* круглый */
+    background: #111;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.checkbox-wrapper input[type="checkbox"]:hover {
+    border-color: #CAFF33;
+    box-shadow: 0 0 6px rgba(202, 255, 51, 0.3);
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked {
+    background: #CAFF33;
+    border-color: #CAFF33;
+    box-shadow: 0 0 10px rgba(202, 255, 51, 0.5);
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    width: 6px;
+    height: 10px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.checkbox-wrapper label {
+    color: #ccc;
+    font-size: 14px;
+    line-height: 1.5;
+    user-select: none;
+}
+
+.checkbox-wrapper label a {
+    color: #CAFF33;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.checkbox-wrapper label a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+
 
 
 /* СТИЛИ ДЛЯ ФОРМЫ ВХОДА КАК У РЕГИСТРАЦИИ */
