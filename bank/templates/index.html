@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script src="{{ url_for('static',filename='js/app.js')}}?v=1.1" defer></script>
     <script src="{{ url_for('static',filename='js/modal.js')}}" defer></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="{{ url_for('static',filename='js/slider.js')}}" defer></script>
+    <script src="{{ url_for('static',filename='js/val.js')}}" defer></script>
 </head>
 
 <body>
@@ -134,7 +139,7 @@
                 <img src="{{ url_for('static', filename='img/Rectangle 78.png') }}" alt="Dots" class="dots-image">
                 <img src="{{ url_for('static', filename='img/Line 1.png') }}" alt="Line" class="line-image">
                 <div class="phone-wrapper">
-                    <img src="{{ url_for('static', filename='img/Apple iPhone 11 Pro Max Midnight Green 2.png') }}" alt="Phone" class="phone-image">     
+                    <img src="{{ url_for('static', filename='img/Apple iPhone 11 Pro Max Midnight Green.png') }}" alt="Phone" class="phone-image">     
                 </div>
             </div>
 
@@ -151,7 +156,77 @@
         </div>
     </section>
 
+    <section class="simple-slider-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Отзывы клиентов</h2>
+
+            <div class="swiper testimonials-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="text-center px-5">
+                            <p class="fs-4 fst-italic">"Отличный банк! Быстрое обслуживание и удобное приложение."</p>
+                            <p class="fw-bold">— Иван Петров</p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="text-center px-5">
+                            <p class="fs-4 fst-italic">"Лучшие условия для бизнеса. Рекомендую всем предпринимателям!"</p>
+                            <p class="fw-bold">— Мария Сидорова</p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="text-center px-5">
+                            <p class="fs-4 fst-italic">"Простая регистрация и мгновенный доступ ко всем услугам."</p>
+                            <p class="fw-bold">— Алексей Козлов</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-pagination"></div>
+
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+
     
+
+    <section class="credit-form-section">
+        <div class="container">
+            <h2 class="section-title">Оформить кредит</h2>
+            <p class="section-subtitle">Оставьте заявку, и мы свяжемся с вами в ближайшее время</p>
+            
+            <form id="creditForm" action="{{ url_for('submit_credit_form') }}" method="POST" class="credit-form">
+                <div class="form-group">
+                    <label for="name">Ваше имя</label>
+                    <input type="text" id="name" name="name" placeholder="Введите ваше имя" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67" required
+                        pattern="^\+7\s?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$"
+                        title="Введите номер в формате +7 (999) 123-45-67">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="example@mail.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Сумма кредита</label>
+                    <input type="number" id="amount" name="amount" placeholder="Введите сумму" min="1" required>
+                </div>
+
+                <button type="submit" class="btn primary">Оформить заявку</button>
+            </form>
+        </div>
+    </section>
+
 
 
     <footer>
