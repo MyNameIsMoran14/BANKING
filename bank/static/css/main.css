@@ -711,7 +711,7 @@ header {
 /*footer*/
 
 footer{
-    background: #000;
+    background: #111111;
     padding: 50px 0;
 }
 
@@ -754,10 +754,16 @@ footer > p{
 }
 
 
+.hr-wrapper {
+    background-color: #1a1a1a; /* фон под линией */
+}
 
-
-
-
+hr {
+    border: none;
+    height: 0.6px;
+    background-color: #CAFF33; /* цвет линии */
+    margin: 0; /* убираем лишние отступы */
+}
 /* СТИЛИ ДЛЯ АДМИН-ПАНЕЛИ */
 
 .admin-container {
@@ -1511,7 +1517,7 @@ footer > p{
     padding: 14px 0;
     background: #7B4ABA;
     border: none;
-    border-radius: 8px;
+    border-radius: 30px;
     color: #fff;
     font-size: 1.2rem;
     cursor: pointer;
@@ -1522,114 +1528,3 @@ footer > p{
     background: #5A358F;
 }
 
-/* ===== Контейнер менеджера ===== */
-.manager-container {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    
-}
-
-.manager-header h1 {
-    color: #CAFF33;
-    font-size: 32px;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.manager-section {
-    background: #1a1a1a;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-.manager-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.manager-table th,
-.manager-table td {
-    padding: 12px 15px;
-    text-align: left;
-    box-sizing: border-box;
-}
-
-.manager-table th {
-    background: #CAFF33;
-    color: #000;
-    font-weight: 600;
-}
-
-.manager-table td {
-    background: #222;
-    border-bottom: 1px solid #333;
-}
-
-.manager-table tr:hover td {
-    background: #2d2d2d;
-}
-
-.status-active {
-    color: #CAFF33;
-    font-weight: 600;
-}
-
-.status-inactive {
-    color: #ff3b3b;
-    font-weight: 600;
-}
-
-/* Кнопки */
-.manager-btn {
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 6px;
-    border: 1px solid transparent; /* фиксируем border сразу */
-    cursor: pointer;
-    font-weight: 600;
-    margin-right: 5px;
-    min-width: 80px; /* фиксированная ширина */
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-}
-
-.approve-btn {
-    background: #CAFF33;
-    color: #000;
-    border-color: #CAFF33; /* чтобы при hover размер не прыгал */
-}
-
-.approve-btn:hover {
-    background: #000;
-    color: #CAFF33;
-    border-color: #CAFF33;
-}
-
-.reject-btn {
-    background: #ff3b3b;
-    color: #fff;
-    border-color: #ff3b3b;
-}
-
-.reject-btn:hover {
-    background: #000;
-    color: #ff3b3b;
-    border-color: #ff3b3b;
-}
-
-/* Ссылка "назад" */
-.manager-back {
-    display: inline-block;
-    margin-top: 20px;
-    color: #CAFF33;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s;
-}
-
-.manager-back:hover {
-    color: #fff;
-}
